@@ -1,7 +1,7 @@
 # Setup
 
 - npm init -y
-- pm i typescript -D
+- npm i typescript -D
 - npx tsc --init
 - npm i jest @types/jest -D
 - npm i @swc/core @swc/cli @swc/jest -D
