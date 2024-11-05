@@ -1,1 +1,1 @@
-export * from "./value_object";
+export * from "./value_objects";
