@@ -1,4 +1,4 @@
-import { UuidVo } from "../../shared";
+import { UuidVo, ValidationError } from "../../shared";
 import validate from "./../../../node_modules/uuid/dist/cjs-browser/validate.d";
 import { CategoryValidatorFactory } from "./category.validators";
 
@@ -55,9 +55,13 @@ export class Category {
     this.is_active = false;
   }
 
-  static validate(category: Category): boolean {
+  static validate(category: Category) {
     const validator = CategoryValidatorFactory.create();
-    return validator.validate(category);
+    const isValid = validator.validate(category);
+
+    if (!isValid) {
+      throw new ValidationError(validator.errors!);
+    }
   }
 
   toJSON() {
