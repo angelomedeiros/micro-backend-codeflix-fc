@@ -1,4 +1,5 @@
 import { Category } from ".";
+import { UuidVo } from "../../shared";
 
 describe("Category Unit Tests", () => {
   it("should create a category from constructor", () => {
@@ -6,7 +7,7 @@ describe("Category Unit Tests", () => {
       name: "Category 1",
     });
 
-    expect(category.category_id).toBeDefined();
+    expect(category.category_id).toBeInstanceOf(UuidVo);
     expect(category.name).toBe("Category 1");
     expect(category.description).toBeNull();
     expect(category.is_active).toBe(true);
@@ -18,7 +19,7 @@ describe("Category Unit Tests", () => {
       name: "Category 1",
     });
 
-    expect(category.category_id).toBeDefined();
+    expect(category.category_id).toBeInstanceOf(UuidVo);
     expect(category.name).toBe("Category 1");
     expect(category.description).toBeNull();
     expect(category.is_active).toBe(true);
@@ -81,6 +82,23 @@ describe("Category Unit Tests", () => {
     expect(json.created_at).toBeInstanceOf(Date);
   });
 
+  describe("should create an id when", () => {
+    const arrange = [
+      { category_id: null },
+      { category_id: undefined },
+      { category_id: new UuidVo() },
+    ];
+
+    it.each(arrange)("category_id is %j", ({ category_id }) => {
+      let category = new Category({
+        name: "Category 1",
+        category_id: category_id,
+      });
+
+      expect(category.category_id).toBeInstanceOf(UuidVo);
+    });
+  });
+
   it("should return json object with custom date", () => {
     let category = new Category({
       name: "Category 1",
@@ -89,7 +107,7 @@ describe("Category Unit Tests", () => {
 
     let json = category.toJSON();
 
-    expect(json.category_id).toBeDefined();
+    expect(typeof json.category_id).toBe("string");
     expect(json.name).toBe("Category 1");
     expect(json.description).toBeNull();
     expect(json.is_active).toBe(true);
@@ -104,7 +122,7 @@ describe("Category Unit Tests", () => {
 
     let json = category.toJSON();
 
-    expect(json.category_id).toBeDefined();
+    expect(typeof json.category_id).toBe("string");
     expect(json.name).toBe("Category 1");
     expect(json.description).toBe("Description 1");
     expect(json.is_active).toBe(true);
