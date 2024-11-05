@@ -1,4 +1,6 @@
 import { UuidVo } from "../../shared";
+import validate from "./../../../node_modules/uuid/dist/cjs-browser/validate.d";
+import { CategoryValidatorFactory } from "./category.validators";
 
 export type CategoryConstructorProps = {
   category_id?: UuidVo | null | undefined;
@@ -53,6 +55,11 @@ export class Category {
 
   deactivate(): void {
     this.is_active = false;
+  }
+
+  static validate(category: Category): boolean {
+    const validator = CategoryValidatorFactory.create();
+    return validator.validate(category);
   }
 
   toJSON() {
