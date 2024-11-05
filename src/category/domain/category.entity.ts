@@ -1,4 +1,4 @@
-import { UuidVo, ValidationError } from "../../shared";
+import { Entity, UuidVo, ValidationError, ValueObject } from "../../shared";
 import validate from "./../../../node_modules/uuid/dist/cjs-browser/validate.d";
 import { CategoryValidatorFactory } from "./category.validators";
 
@@ -16,8 +16,8 @@ export type CategoryCreateCommand = {
   is_active?: boolean;
 };
 
-export class Category {
-  category_id?: UuidVo | null | undefined;
+export class Category implements Entity {
+  category_id: UuidVo | null | undefined;
   name: string;
   description: string | null;
   is_active: boolean;
@@ -29,6 +29,10 @@ export class Category {
     this.description = props.description ?? null;
     this.created_at = props.created_at ?? new Date();
     this.is_active = props.is_active ?? true;
+  }
+
+  get entityId(): ValueObject {
+    return this.category_id!;
   }
 
   static create(props: CategoryCreateCommand): Category {
