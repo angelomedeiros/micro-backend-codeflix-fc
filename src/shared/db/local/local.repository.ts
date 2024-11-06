@@ -1,4 +1,4 @@
-import { Entity, ValueObject } from "../..";
+import { Entity, NotFoundError, ValueObject } from "../..";
 import { IRepository } from "../../repository";
 
 export abstract class LocalRepository<
@@ -22,24 +22,26 @@ export abstract class LocalRepository<
     );
 
     if (index === -1) {
-      throw new Error("Entity not found");
+      throw new NotFoundError(entity.entityId, this.getEntity());
     }
 
     this.items[index] = entity;
   }
 
-  async delete(id: EntityId): Promise<void> {
-    const index = this.items.findIndex((item) => item.entityId.equals(id));
+  async delete(entityId: EntityId): Promise<void> {
+    const index = this.items.findIndex((item) =>
+      item.entityId.equals(entityId)
+    );
 
     if (index === -1) {
-      throw new Error("Entity not found");
+      throw new NotFoundError(entityId, this.getEntity());
     }
 
     this.items.splice(index, 1);
   }
 
-  async findById(id: EntityId): Promise<E | null> {
-    return this.items.find((item) => item.entityId.equals(id)) || null;
+  async findById(entityId: EntityId): Promise<E | null> {
+    return this.items.find((item) => item.entityId.equals(entityId)) || null;
   }
 
   async findAll(): Promise<E[]> {
