@@ -1,5 +1,5 @@
 import { LocalRepository } from "..";
-import { Entity, NotFoundError, UuidVo, ValueObject } from "../..";
+import { Entity, NotFoundError, UuidVo, ValueObject } from "../../..";
 
 type StubEntityConstructor = {
   entityId?: UuidVo;

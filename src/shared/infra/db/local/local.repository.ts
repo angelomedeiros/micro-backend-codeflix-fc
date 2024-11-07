@@ -1,5 +1,4 @@
-import { Entity, NotFoundError, ValueObject } from "../..";
-import { IRepository } from "../../repository";
+import { Entity, IRepository, NotFoundError, ValueObject } from "../../..";
 
 export abstract class LocalRepository<
   E extends Entity,

@@ -3,7 +3,7 @@ import validate from "./../../../node_modules/uuid/dist/cjs-browser/validate.d";
 import { CategoryValidatorFactory } from "./category.validators";
 
 export type CategoryConstructorProps = {
-  category_id?: UuidVo | null | undefined;
+  category_id?: UuidVo;
   name: string;
   description?: string | null;
   is_active?: boolean;
@@ -17,7 +17,7 @@ export type CategoryCreateCommand = {
 };
 
 export class Category implements Entity {
-  category_id: UuidVo | null | undefined;
+  category_id: UuidVo;
   name: string;
   description: string | null;
   is_active: boolean;
